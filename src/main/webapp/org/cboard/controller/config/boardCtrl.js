@@ -145,6 +145,10 @@ cBoard.controller('boardCtrl',
         $('div.newBoard').addClass('hideOperate');
     };
 
+    $scope.newDatavLayout = function () {
+        $state.go("config.datav")
+    }
+
     $scope.newTimelineLayout = function () {
         $rootScope.freeLayout = false;
         $scope.optFlag = 'new';
@@ -447,7 +451,11 @@ cBoard.controller('boardCtrl',
         if (!checkTreeNode("edit")) return;
         $scope.editBoard(getSelectedBoard());
         var selectedNode = jstree_GetSelectedNodes(treeID)[0];
-        $state.go('config.board', {boardId: selectedNode.id}, {notify: false});
+        if($scope.curBoard.layout.type == 'datav'){
+            $state.go('config.datav', {boardId: selectedNode.id});
+        }else{
+            $state.go('config.board', {boardId: selectedNode.id}, {notify: false});
+        }
     };
 
     $scope.deleteNode = function () {
